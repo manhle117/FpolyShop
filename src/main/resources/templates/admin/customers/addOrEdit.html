@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}"    
+>
+
+  <head>
+    <title>Title</title>
+    
+</head>
+
+<body>
+  
+    <section class="row" layout:fragment="content">
+        <div class="col-6 offset-3 mt-4">
+            <form  th:action="@{/admin/customers/saveOrUpdate}" method="post" th:object="${customer}">
+                <input type="hidden" th:field="*{isEdit}">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 th:if="${customer.isEdit}"> Update customer</h2>
+                        <h2 th:if="${!customer.isEdit}">Add New customer</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="customerId">customer ID: </label>
+                            
+                            <input type="text" class="form-control" th:field="*{customerId}" id="customerId"
+                                aria-describedby="customerIdHid" placeholder="customerId" readonly>
+                            <small th:if="${#fields.hasErrors('customerId')}" id="customerIdHid" class="form-text text-muted">customer id is required</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" th:field="*{name}" id="name" aria-describedby="nameHid"
+                                placeholder="Name">
+                            <small  th:if="${#fields.hasErrors('name')}"  id="nameHid" class="form-text text-muted">Name is required</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="email" th:field="*{email}" class="form-control" name="email" id="email" aria-describedby="emailHId" placeholder="Email">
+                          <small id="emailHId" class="form-text text-muted">Email is required</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input type="password" th:field="*{password}" class="form-control" name="password" id="password" aria-describedby="passwordHId" placeholder="Password">
+                          <small id="passwordHId" class="form-text text-muted">Password is required</small>
+                        </div>
+                        <div class="form-group">
+                          <label for="phone">Phone</label>
+                          <input type="tel" th:field="*{phone}" class="form-control" name="phone" id="phone" aria-describedby="phoneHId" placeholder="Phone">
+                          <small id="phoneHId" class="form-text text-muted">PhoneNumber is required</small>
+                        </div>
+                        <div class="form-group" th:if="${customer.isEdit}">
+                          <label for="regisDate">RegisDate</label>
+                          <input type="datetime" th:field="*{RegisteredDate}" class="form-control" name="regisDate" id="regisDate" aria-describedby="helpId" placeholder="Date" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" name="status" id="status" th:field="*{status}">
+                              <option value="0">Active</option>
+                              <option value="1">Inactive</option>
+                            </select>
+                          </div>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <button type="reset" class="btn btn-secondary"><i class="fa fa-refresh"
+                                aria-hidden="true"></i> Reset</button>
+                        <a th:href="@{/admin/customers}" class="btn btn-success">List customers</a>
+                        <button class="btn btn-primary"><i class="fas fa-save  "></i> 
+                            <span th:if="${customer.isEdit}">Update</span>
+                            <span th:if="${!customer.isEdit}">Save</span>
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+       
+</body>
+
+</html>
